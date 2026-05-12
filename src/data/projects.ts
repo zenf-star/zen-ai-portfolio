@@ -13,7 +13,8 @@ export const projects: Project[] = [
       'Client awareness: Looks up the customer against an embedded high-value roster and adjusts priority before the AI runs.',
       'Slack context: When the ticket links to a Slack thread, reads it and folds the conversation into its analysis.',
       'AI-proposed updates: Asks Claude Sonnet to propose values for six ticket fields based on everything gathered.',
-      'Human approval: Posts the proposal as a Jira comment for a human to accept or reject — never edits a ticket on its own.'
+      'Human approval: Posts the proposal as a Jira comment for a human to accept or reject — never edits a ticket on its own.',
+      'Self-correcting feedback loop: Engineers tag the agent (@Chip) with corrections; the agent stores them and uses them as examples in future triages.'
     ],
     demoUrl: '',
     year: '2024',
@@ -80,6 +81,24 @@ Then posts a confirmation comment showing each before→after.
 Sets AI Review Status → 🔴 Rejected, posts a rejection comment.
 No fields updated. The L2 agent handles the ticket manually.
 
+## The feedback loop
+
+A reviewer can tag the bot's Jira account (\`@Chip\`) on a reviewed
+ticket with a correction — for example, ""wrong tribe, this should
+have routed to Cards"" or ""priority should be P1, this client is HV"".
+
+A webhook handler routes \`comment_created\` events that mention
+\`@Chip\` to a capture service. A Haiku parser extracts the correction
+into a structured form (which field, what the right answer should have
+been), persists it to a \`review_corrections\` table idempotently, and
+posts an acknowledgement back on the ticket.
+
+On the next run, a runtime helper pulls relevant corrections and
+injects them into the prompt as few-shot examples. The agent absorbs
+human judgment as runtime context — no code edits, no prompt redeploy.
+Drift in policy pages or the high-value roster shows up as override
+rate climbing; the corrections become the immediate fix.
+
 ## Stack
 
 - n8n (workflow runtime, hosted)
@@ -110,7 +129,6 @@ stays as a living document, owned by the people closest to the work.
       'Triage classification: Picks the team that owns the bug, scores how well it\'s described, and assigns a priority.',
       'Validity check: Determines whether the ticket is a real bug worth working — flags duplicates and "not a bug" cases.',
       'Root cause hypothesis: Downloads the relevant codebase and proposes where the bug probably lives, with suspected files.',
-      'Self-correcting feedback loop: Engineers tag the agent (@Chip) with corrections; the agent stores them and uses them as examples in future triages.',
       'Graceful degradation: If root-cause analysis fails, the comment still ships with everything else — partial triage beats none.'
     ],
     demoUrl: '',
@@ -155,28 +173,6 @@ Each shard reads from a per-run blackboard, calls infra (\`ctx.ai\`,
 credentials, \`complete()\`), writes its declared output, and hands off.
 All Jira side effects live in the Comment shard — one place to look
 when debugging output.
-
-## The feedback loop
-
-A reviewer can tag the bot's Jira account (\`@Chip\`) on a triaged
-ticket with a correction — for example, ""wrong product area, this is
-Cards not Local Hub"" or ""should be P1 not P2 because client is HV"".
-
-A separate webhook handler routes \`comment_created\` events that mention
-\`@Chip\` to a capture service. A Haiku parser extracts the correction
-into a structured form (which shard, which field, what the right
-answer should have been), persists it to the \`triage_corrections\`
-table idempotently, and posts an acknowledgement back on the ticket.
-
-On the next run, a runtime helper pulls relevant corrections by shard
-and injects them into the prompt as few-shot examples. The agent
-absorbs human judgment as runtime context — no code edits, no model
-retraining, no redeploy. Drift in the seed data or prompts shows up
-as override rate climbing; the corrections become the immediate fix.
-
-A weekly Curator titan (separate, build-time loop) periodically
-reviews accumulated corrections and proposes prompt or
-\`platform_config\` diffs as a GitHub PR for human approval.
 
 ## Idempotency
 
