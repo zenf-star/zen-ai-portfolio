@@ -183,35 +183,40 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                         {project.demoUrl ? (
                           <>
                             {project.demoUrl.includes('loom.com/embed') || project.demoUrl.includes('youtube.com/embed') ? (
-                              <iframe 
-                                src={project.demoUrl} 
-                                allowFullScreen 
+                              <iframe
+                                src={project.demoUrl}
+                                allowFullScreen
                                 className="w-full h-full border-0"
                               />
                             ) : project.demoUrl.match(/\.(mp4|webm|ogg)$/) ? (
-                              <video 
-                                src={project.demoUrl} 
-                                controls 
+                              <video
+                                src={project.demoUrl}
+                                poster={project.posterUrl}
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                                controls
                                 className="w-full h-full object-cover"
                               />
                             ) : (
-                              <img 
-                                src={project.demoUrl} 
-                                alt="Demo preview" 
+                              <img
+                                src={project.demoUrl}
+                                alt="Demo preview"
                                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                 referrerPolicy="no-referrer"
                               />
                             )}
                           </>
                         ) : (
-                          <div className="text-zinc-400 text-xs font-mono">Demo Preview Placeholder</div>
-                        )}
-                        {!project.demoUrl?.includes('embed') && (
-                          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div className="px-4 py-2 bg-white/90 backdrop-blur text-[10px] font-mono tracking-widest uppercase border border-zinc-200 shadow-sm">
-                              Platform Preview
+                          <>
+                            <div className="text-zinc-400 text-xs font-mono">Demo Preview Placeholder</div>
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                              <div className="px-4 py-2 bg-white/90 backdrop-blur text-[10px] font-mono tracking-widest uppercase border border-zinc-200 shadow-sm">
+                                Platform Preview
+                              </div>
                             </div>
-                          </div>
+                          </>
                         )}
                       </div>
                     </section>

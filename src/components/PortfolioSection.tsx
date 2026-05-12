@@ -26,39 +26,29 @@ const itemVariants = {
 };
 
 export default function PortfolioSection() {
-  const categories = ['Automation', 'Frontend', 'Community'] as const;
-
   return (
-    <section id="portfolio" className="py-24 space-y-24 lg:space-y-32">
-      {categories.map((cat, index) => (
-        <div key={cat} className="space-y-16">
-          <SectionHeading 
-            label={index === 0 ? "Selected works" : undefined}
-            title={cat === 'Automation' ? 'Agents + Systems' : cat === 'Frontend' ? 'Designs + Visualisations' : 'Community & SOPs'} 
-            subtitle={
-              cat === 'Automation' ? "Tools that I've built or contributed significantly to. Each one started as problem someone hated, and ended as an AI-powered solution. Click into any of these projects for more details." : 
-              cat === 'Frontend' ? 'Interfaces and visualisations designed for clarity in high-density environments. These are the control surfaces and logs for complex systems—built to make technical data legible and actionable.' : 
-              'Encoding knowledge into shared skills.'
-            }
-          />
-          
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1"
-          >
-            {projects
-              .filter(p => p.category === cat)
-              .map(project => (
-                <motion.div key={project.id} variants={itemVariants}>
-                  <ProjectCard project={project} />
-                </motion.div>
-              ))}
-          </motion.div>
-        </div>
-      ))}
+    <section id="portfolio" className="py-24">
+      <div className="space-y-16">
+        <SectionHeading
+          label="Selected works"
+          title="Projects"
+          subtitle="Tools, agents, and interfaces I've built or contributed significantly to. Click any card for the mechanism and how it's used."
+        />
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1"
+        >
+          {projects.map(project => (
+            <motion.div key={project.id} variants={itemVariants}>
+              <ProjectCard project={project} />
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 }

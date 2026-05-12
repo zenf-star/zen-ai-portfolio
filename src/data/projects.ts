@@ -1,6 +1,40 @@
 import { Project, ProjectCategory } from '../types';
 
+// Demo assets live under public/videos and public/posters and are referenced
+// by Vite as root-relative paths, e.g. demoUrl: '/videos/<id>.mp4',
+// posterUrl: '/posters/<id>.jpg'. Vite rewrites them for the configured base
+// path at build time.
+
 export const projects: Project[] = [
+  {
+    id: 'tech-diagnostics',
+    category: 'Frontend',
+    title: 'Tech Diagnostics',
+    tag: 'Dashboard',
+    oneLiner: 'AI-powered analytics platform for engineering leadership.',
+    github: 'https://github.com/weaspire/tech-diagnostics',
+    description: 'Engineering leaders used to stitch together Jira filters and status decks. Tech Diagnostics replaces that. It syncs Jira nightly, reconstructs bug SLA timing, and surfaces sprint velocity and quality score.',
+    keyFeatures: [
+      'Jira sync engine: Pulls every ticket and changelog entry nightly; reconstructs bug SLA timing from raw status history.',
+      'Sprint metrics: Velocity, story-point delivery, and capacity — per squad and quarter.',
+      'Bug analytics: Open bug counts, SLA breach trend, root-cause classification, and quality score.',
+      'Data monitors: Scheduled SQL queries against production databases; alerts post to Slack with 1-click resolve.',
+      'AI weekly reports: Pulls structured engineering data and writes an analyst-grade brief auto-delivered to leadership.',
+      'Configurable targets: Quarter-by-quarter SLA, capacity, and quality targets set in admin.'
+    ],
+    demoUrl: '',
+    year: '2024',
+    readme: `
+# Tech Diagnostics
+
+Team Performance Analytics Dashboard - A monorepo containing a Laravel API backend and Quasar (Vue.js) frontend.
+
+## Architecture
+- **Backend:** Laravel API
+- **Frontend:** Quasar SPA (Vue.js)
+- **Data:** MySQL / PostgreSQL
+    `
+  },
   {
     id: 'support-ticket-reviewer',
     category: 'Automation',
@@ -284,6 +318,29 @@ Any check failing blocks activation. There is no override.
     `
   },
   {
+    id: 'voice-of-customer',
+    category: 'Automation',
+    title: 'Voice of Customer',
+    tag: 'Agent',
+    oneLiner: 'Multi-source agent for synthesising our Voice of Customer.',
+    description: 'The Voice of Customer agent is a three-stage n8n pipeline. It normalises sources into a unified staging schema and applies four Confluence-hosted policies to cluster duplicate feedback.',
+    keyFeatures: [
+      'Multi-source ingestion: Pulls feedback from HubSpot, Intercom, NPS, and more.',
+      'Unified staging schema: Normalises every source into a single 30-field sheet.',
+      'AI clustering: Rows describing the same root issue land as one Jira ticket.',
+      'Impact monetisation: Each ticket carries a Primary metric impact (e.g., Card TPV).',
+      'Configurable rulebook: Four Confluence policy pages drive every decision.',
+      'Audit trail: Every Jira ticket links back to the staging rows that produced it.'
+    ],
+    demoUrl: '',
+    year: '2024',
+    readme: `
+# Voice of Customer
+
+An AI-powered pipeline that consolidates customer feedback from seven sources into one Jira workflow.
+    `
+  },
+  {
     id: 'product-suggestions-router',
     category: 'Automation',
     title: 'Product Suggestions Router',
@@ -325,6 +382,36 @@ Hourly schedule.
     `
   },
   {
+    id: 'daily-competitor-insights',
+    category: 'Automation',
+    title: 'Daily Competitor Insights',
+    tag: 'Agent',
+    oneLiner: 'Daily competitor watch that posts only when something matters.',
+    description: 'This is a scheduled task that runs on Claude every day. It searches for news about Aspire\'s priority competitors and the broader SME fintech space, applying a ruthless quality filter.',
+    keyFeatures: [
+      'Daily scheduled scan: Runs once a day; web-search across the priority watchlist plus broader SME fintech.',
+      'Six categories of material news: Product, pricing, expansion, fundraising, leadership, regulatory.',
+      'Quality filter: Explicit include/exclude rules — direct competitive threats in; thought-leadership out.',
+      'Silent on quiet days: If nothing material happened, the agent doesn\'t post.',
+      'Executive-ready Slack output: 3–5 single-sentence bullets to #sg-competitor-insights with hyperlinked sources.'
+    ],
+    demoUrl: '',
+    year: '2024',
+    readme: `
+# Daily Competitor Insights
+
+A daily scheduled task running in claude.ai.
+
+## Priority Watchlist
+- Airwallex
+- Brex
+- Ramp
+- Mercury
+- YouTrip / YouBiz
+- Revolut Business
+    `
+  },
+  {
     id: 'chief-of-staff-agent',
     category: 'Automation',
     title: 'Chief of Staff Agent (WIP)',
@@ -356,33 +443,51 @@ Persistent memory across Claude Code sessions. Help the CoS keep CTO Office work
     `
   },
   {
-    id: 'daily-competitor-insights',
+    id: 'project-documenter',
     category: 'Automation',
-    title: 'Daily Competitor Insights',
-    tag: 'Agent',
-    oneLiner: 'Daily competitor watch that posts only when something matters.',
-    description: 'This is a scheduled task that runs on Claude every day. It searches for news about Aspire\'s priority competitors and the broader SME fintech space, applying a ruthless quality filter.',
+    title: 'Project Documenter',
+    tag: 'Skill',
+    oneLiner: 'Self-documenting agent for project portfolios.',
+    github: 'https://github.com/zenf-star/claude-skills',
+    description: 'This Claude Code agent takes any source (GitHub repo, n8n JSON, SKILL.md) and produces a complete portfolio entry. Every correction becomes a rule for future drafts.',
     keyFeatures: [
-      'Daily scheduled scan: Runs once a day; web-search across the priority watchlist plus broader SME fintech.',
-      'Six categories of material news: Product, pricing, expansion, fundraising, leadership, regulatory.',
-      'Quality filter: Explicit include/exclude rules — direct competitive threats in; thought-leadership out.',
-      'Silent on quiet days: If nothing material happened, the agent doesn\'t post.',
-      'Executive-ready Slack output: 3–5 single-sentence bullets to #sg-competitor-insights with hyperlinked sources.'
+      'Multi-source intake: Reads GitHub repos, n8n JSON, SKILL.md, or written notes.',
+      'CLAUDE.md as standard: Anatomies and voice rules live in one file the agent re-reads.',
+      'Proposal-first workflow: Presents a draft table for approval before publishing.',
+      'Self-improving rulebook: Corrections become rules that apply to the next draft.',
+      'Sheet handoff: Approved entries are written to the master Google Sheet via JWT auth.',
+      'Question discipline: Batched, targeted questions to minimize user friction.'
     ],
     demoUrl: '',
     year: '2024',
     readme: `
-# Daily Competitor Insights
+# Project Documenter
 
-A daily scheduled task running in claude.ai.
+The webpage you're on right now? Every entry was drafted by this system.
+    `
+  },
+  {
+    id: 'tone-of-voice',
+    category: 'Automation',
+    title: 'Tone of Voice',
+    tag: 'Skill',
+    oneLiner: 'Self-improving voice skill for personal drafting.',
+    github: 'https://github.com/zenf-star/claude-skills',
+    description: 'Tone of Voice is a Claude Code skill that captures personal writing voice across Slack and LinkedIn. It self-corrects: every off-key draft becomes a new rule in the skill.',
+    keyFeatures: [
+      'Two voice profiles: Separate skills for Slack (internal) and LinkedIn (external).',
+      'History-extracted: Voice profile built by feeding Claude past Slack threads and LinkedIn posts.',
+      'Concrete rules: Openers, rhythms, and hedge phrases to avoid are explicitly defined.',
+      'Anti-slop checklist: A "never says X" list caught before any draft ships.',
+      'Hand-tuned: User adds new rules directly as the skill compounds with use.',
+      'Drop-in skill: Loaded into Claude Code context whenever drafting a message.'
+    ],
+    demoUrl: '',
+    year: '2024',
+    readme: `
+# Tone of Voice
 
-## Priority Watchlist
-- Airwallex
-- Brex
-- Ramp
-- Mercury
-- YouTrip / YouBiz
-- Revolut Business
+A personal voice harness for Claude Code, composed of two paired skills — one for Slack and workplace messaging, one for LinkedIn and public-facing posts.
     `
   },
   {
@@ -406,7 +511,7 @@ A daily scheduled task running in claude.ai.
     readme: `
 # Specs Writer
 
-A Claude Code skill that bundles Aspire's spec writing standard and applies it. 
+A Claude Code skill that bundles Aspire's spec writing standard and applies it.
 
 ## Required Spec Structure
 1. BACKGROUND (Problem, Solution, Impact)
@@ -451,30 +556,6 @@ opportunity at Aspire.
     `
   },
   {
-    id: 'tone-of-voice',
-    category: 'Automation',
-    title: 'Tone of Voice',
-    tag: 'Skill',
-    oneLiner: 'Self-improving voice skill for personal drafting.',
-    github: 'https://github.com/zenf-star/claude-skills',
-    description: 'Tone of Voice is a Claude Code skill that captures personal writing voice across Slack and LinkedIn. It self-corrects: every off-key draft becomes a new rule in the skill.',
-    keyFeatures: [
-      'Two voice profiles: Separate skills for Slack (internal) and LinkedIn (external).',
-      'History-extracted: Voice profile built by feeding Claude past Slack threads and LinkedIn posts.',
-      'Concrete rules: Openers, rhythms, and hedge phrases to avoid are explicitly defined.',
-      'Anti-slop checklist: A "never says X" list caught before any draft ships.',
-      'Hand-tuned: User adds new rules directly as the skill compounds with use.',
-      'Drop-in skill: Loaded into Claude Code context whenever drafting a message.'
-    ],
-    demoUrl: '',
-    year: '2024',
-    readme: `
-# Tone of Voice
-
-A personal voice harness for Claude Code, composed of two paired skills — one for Slack and workplace messaging, one for LinkedIn and public-facing posts.
-    `
-  },
-  {
     id: 'google-sheet-writer',
     category: 'Automation',
     title: 'Google Sheet Writer',
@@ -494,7 +575,7 @@ A personal voice harness for Claude Code, composed of two paired skills — one 
     readme: `
 # Google Sheets Read/Write
 
-Access Google Sheets via the Google Sheets API v4 using a service account for authentication. 
+Access Google Sheets via the Google Sheets API v4 using a service account for authentication.
 
 ## Prerequisites
 - **Service account key**
@@ -502,32 +583,26 @@ Access Google Sheets via the Google Sheets API v4 using a service account for au
     `
   },
   {
-    id: 'tech-diagnostics',
-    category: 'Frontend',
-    title: 'Tech Diagnostics',
-    tag: 'Dashboard',
-    oneLiner: 'AI-powered analytics platform for engineering leadership.',
-    github: 'https://github.com/weaspire/tech-diagnostics',
-    description: 'Engineering leaders used to stitch together Jira filters and status decks. Tech Diagnostics replaces that. It syncs Jira nightly, reconstructs bug SLA timing, and surfaces sprint velocity and quality score.',
+    id: 'memory-manager',
+    category: 'Automation',
+    title: 'Memory Manager',
+    tag: 'Skill',
+    oneLiner: 'Auto-warning skill for Claude Code context and cost.',
+    github: 'https://github.com/zenf-star/claude-skills',
+    description: 'Memory Manager is two UserPromptSubmit hooks that watch the session\'s token cache and fire graduated warnings. It detects when a long-coding command is invoked and prompts a switch to Sonnet.',
     keyFeatures: [
-      'Jira sync engine: Pulls every ticket and changelog entry nightly; reconstructs bug SLA timing from raw status history.',
-      'Sprint metrics: Velocity, story-point delivery, and capacity — per squad and quarter.',
-      'Bug analytics: Open bug counts, SLA breach trend, root-cause classification, and quality score.',
-      'Data monitors: Scheduled SQL queries against production databases; alerts post to Slack with 1-click resolve.',
-      'AI weekly reports: Pulls structured engineering data and writes an analyst-grade brief auto-delivered to leadership.',
-      'Configurable targets: Quarter-by-quarter SLA, capacity, and quality targets set in admin.'
+      'Three-stage warning: Fires at 75K, 100K (with handoff summary), and 150K tokens.',
+      'Sonnet switch prompt: STOP-and-ASK switch to Sonnet 4.6 (5x cheaper) for routine work.',
+      'Prompt-injection: Warning becomes a prompt the AI follows, not just a passive terminal message.',
+      'JSONL-driven: Tails the session\'s transcript file to parse token counts.',
+      'State-deduped: Flag file prevents re-firing within the same session.'
     ],
     demoUrl: '',
     year: '2024',
     readme: `
-# Tech Diagnostics
+# Memory Manager
 
-Team Performance Analytics Dashboard - A monorepo containing a Laravel API backend and Quasar (Vue.js) frontend.
-
-## Architecture
-- **Backend:** Laravel API
-- **Frontend:** Quasar SPA (Vue.js)
-- **Data:** MySQL / PostgreSQL
+Two \`UserPromptSubmit\` hooks for Claude Code that govern runtime context and model use.
     `
   },
   {
@@ -572,76 +647,6 @@ Interactive details: animated mandate JSON in the hero, a live authorizations ti
 # Kaki Socks
 
 Single-page website for a streetwear soap brand.
-    `
-  },
-  {
-    id: 'memory-manager',
-    category: 'Automation',
-    title: 'Memory Manager',
-    tag: 'Skill',
-    oneLiner: 'Auto-warning skill for Claude Code context and cost.',
-    github: 'https://github.com/zenf-star/claude-skills',
-    description: 'Memory Manager is two UserPromptSubmit hooks that watch the session\'s token cache and fire graduated warnings. It detects when a long-coding command is invoked and prompts a switch to Sonnet.',
-    keyFeatures: [
-      'Three-stage warning: Fires at 75K, 100K (with handoff summary), and 150K tokens.',
-      'Sonnet switch prompt: STOP-and-ASK switch to Sonnet 4.6 (5x cheaper) for routine work.',
-      'Prompt-injection: Warning becomes a prompt the AI follows, not just a passive terminal message.',
-      'JSONL-driven: Tails the session\'s transcript file to parse token counts.',
-      'State-deduped: Flag file prevents re-firing within the same session.'
-    ],
-    demoUrl: '',
-    year: '2024',
-    readme: `
-# Memory Manager
-
-Two \`UserPromptSubmit\` hooks for Claude Code that govern runtime context and model use.
-    `
-  },
-  {
-    id: 'voice-of-customer',
-    category: 'Automation',
-    title: 'Voice of Customer',
-    tag: 'Agent',
-    oneLiner: 'Multi-source agent for synthesising our Voice of Customer.',
-    description: 'The Voice of Customer agent is a three-stage n8n pipeline. It normalises sources into a unified staging schema and applies four Confluence-hosted policies to cluster duplicate feedback.',
-    keyFeatures: [
-      'Multi-source ingestion: Pulls feedback from HubSpot, Intercom, NPS, and more.',
-      'Unified staging schema: Normalises every source into a single 30-field sheet.',
-      'AI clustering: Rows describing the same root issue land as one Jira ticket.',
-      'Impact monetisation: Each ticket carries a Primary metric impact (e.g., Card TPV).',
-      'Configurable rulebook: Four Confluence policy pages drive every decision.',
-      'Audit trail: Every Jira ticket links back to the staging rows that produced it.'
-    ],
-    demoUrl: '',
-    year: '2024',
-    readme: `
-# Voice of Customer
-
-An AI-powered pipeline that consolidates customer feedback from seven sources into one Jira workflow.
-    `
-  },
-  {
-    id: 'project-documenter',
-    category: 'Automation',
-    title: 'Project Documenter',
-    tag: 'Agent',
-    oneLiner: 'Self-documenting agent for project portfolios.',
-    github: 'https://github.com/zenf-star/claude-skills',
-    description: 'This Claude Code agent takes any source (GitHub repo, n8n JSON, SKILL.md) and produces a complete portfolio entry. Every correction becomes a rule for future drafts.',
-    keyFeatures: [
-      'Multi-source intake: Reads GitHub repos, n8n JSON, SKILL.md, or written notes.',
-      'CLAUDE.md as standard: Anatomies and voice rules live in one file the agent re-reads.',
-      'Proposal-first workflow: Presents a draft table for approval before publishing.',
-      'Self-improving rulebook: Corrections become rules that apply to the next draft.',
-      'Sheet handoff: Approved entries are written to the master Google Sheet via JWT auth.',
-      'Question discipline: Batched, targeted questions to minimize user friction.'
-    ],
-    demoUrl: '',
-    year: '2024',
-    readme: `
-# Project Documenter
-
-The webpage you're on right now? Every entry was drafted by this system.
     `
   }
 ];

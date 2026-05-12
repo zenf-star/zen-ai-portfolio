@@ -9,6 +9,7 @@ export interface Project {
   description: string;
   keyFeatures: string[];
   demoUrl: string;
+  posterUrl?: string;
   year: string;
   readme?: string;
   github?: string;
